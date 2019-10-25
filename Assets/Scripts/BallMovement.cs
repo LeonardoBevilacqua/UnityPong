@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class BallMovement : MonoBehaviour
@@ -11,19 +12,28 @@ public class BallMovement : MonoBehaviour
     private Rigidbody2D ballRigidBody;
 
     // variable responsible to set the X direction
-    private int moveX = 1;
+    private int moveX;
 
     // variable responsible to set the Y direction
-    private int moveY = -1;
+    private int moveY;
 
-    // variable responsible to set the ball velocity
+    private int points;
+
+    // exported variable responsible to set the ball velocity
     public float ballVelocity;
+
+    // exported variable that holds the Points label reference
+    public Text pointsLabel;
     
     // Start is called before the first frame update
     void Start()
     {
-        // initialize the ball velocity
+        // initialize variables
         this.ballVelocity = 5.0f;
+        this.moveX = 1;
+        this.moveY = -1;
+        this.points = 0;
+
         // get the ball rigid body
         this.ballRigidBody = gameObject.GetComponent<Rigidbody2D>();
 
@@ -90,6 +100,9 @@ public class BallMovement : MonoBehaviour
         {
             moveY *= -1;
         }
+
+        // update points
+        this.UpdatePoints();
     }
 
     // Method responsible to change the ball behaviour after collide with the player
@@ -97,5 +110,12 @@ public class BallMovement : MonoBehaviour
     {
         // bounce the ball up
         moveY *= -1;
+    }
+
+    // Method responsible to update the points count and show it
+    private void UpdatePoints() 
+    {
+        this.pointsLabel.text = (++this.points).ToString();
+
     }
 }
