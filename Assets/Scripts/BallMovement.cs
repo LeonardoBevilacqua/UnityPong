@@ -4,61 +4,98 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
+    // variable responsible to set the direction velocity
     private Vector2 velocity;
 
-    private Rigidbody2D rb2d;
+    // variable responsible to hold the ball rigid body reference
+    private Rigidbody2D ballRigidBody;
 
+    // variable responsible to set the X direction
     private int moveX = 1;
+
+    // variable responsible to set the Y direction
     private int moveY = -1;
 
+    // variable responsible to set the ball velocity
     public float ballVelocity;
+    
     // Start is called before the first frame update
     void Start()
     {
+        // initialize the ball velocity
         this.ballVelocity = 5.0f;
+        // get the ball rigid body
+        this.ballRigidBody = gameObject.GetComponent<Rigidbody2D>();
 
+        // set the ball to a random position
         transform.position = new Vector3(Random.Range(-3.0f, 3.0f), 3, 0);
-        rb2d = gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // set the ball velocity
         velocity = new Vector2(ballVelocity * moveX, ballVelocity * moveY);
 
-        rb2d.MovePosition(rb2d.position + velocity * Time.fixedDeltaTime);
+        // move the ball
+        ballRigidBody.MovePosition(ballRigidBody.position + velocity * Time.fixedDeltaTime);
     }
 
     // OnTriggerEnter is called when a collision is trigger
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D objectCollider)
     {
-        if (other.gameObject.name == "Box")
+        switch (objectCollider.gameObject.tag)
         {
-            if ((this.transform.position.x - other.GetComponent<Collider2D>().transform.position.x) < 0 || (this.transform.position.x - other.GetComponent<Collider2D>().transform.position.x) > 0)
-            {
-                moveX *= -1;
-            }
-            if ((this.transform.position.y - other.GetComponent<Collider2D>().transform.position.y) < 0 || (this.transform.position.y - other.GetComponent<Collider2D>().transform.position.y) > 0)
-            {
-                moveY *= -1;
-            }
+            case "Box":
+                this.VerifyBoxCollision(objectCollider);
+                break;
+            case "Wall":
+                this.VerifyWallCollision(objectCollider);
+                break;
+            case "Player":
+                VerifyPlayerCollision(objectCollider);
+                break;
         }
+    }
 
-
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            if (other.gameObject.name == "TopWall")
-            {
-                moveY *= -1;
-            }
-            else
-            {
-                moveX *= -1;
-            }
-        }
-        else if (other.gameObject.CompareTag("Player"))
+    // Method responsible to change the ball behaviour after collide with a wall
+    private void VerifyWallCollision(Collider2D objectCollider)
+    {
+        // check if hit the ceiling
+        if (objectCollider.gameObject.name == "Ceiling")
         {
             moveY *= -1;
         }
+        else
+        {
+            moveX *= -1;
+        }
+    }
+
+    // Method responsible to change the ball behaviour after collide with a box
+    private void VerifyBoxCollision(Collider2D objectCollider)
+    {
+        // set the X and Y distance
+        float distanceX = this.transform.position.x - objectCollider.GetComponent<Collider2D>().transform.position.x;
+        float distanceY = this.transform.position.y - objectCollider.GetComponent<Collider2D>().transform.position.y;
+
+        // verify if hit the X axis
+        if (distanceX != 0)
+        {
+            moveX *= -1;
+        }
+
+        // verify if hit the Y axis
+        if (distanceY != 0)
+        {
+            moveY *= -1;
+        }
+    }
+
+    // Method responsible to change the ball behaviour after collide with the player
+    private void VerifyPlayerCollision(Collider2D objectCollider)
+    {
+        // bounce the ball up
+        moveY *= -1;
     }
 }

@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 108811}
   - component: {fileID: 108812}
   m_Layer: 0
-  m_Name: TopWall
+  m_Name: Ceiling
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 1053625843}
   m_Layer: 0
   m_Name: Box
-  m_TagString: Untagged
+  m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
