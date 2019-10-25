@@ -27,7 +27,6 @@ public class Box : MonoBehaviour
     // OnTriggerEnter is called when a collision is trigger
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("entrou");
         if (other.gameObject.CompareTag("Ball"))
         {
             this.lifePoints--;
@@ -39,7 +38,6 @@ public class Box : MonoBehaviour
 
      void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("saiu");
         if (other.gameObject.CompareTag("Ball"))
         {
             this.isColliding = false;

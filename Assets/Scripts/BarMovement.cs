@@ -25,8 +25,8 @@ public class BarMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        int left = Input.GetKey(KeyCode.LeftArrow) && !isCollidingLeft ? -1 : 0;
-        int right = Input.GetKey(KeyCode.RightArrow) && !isCollidingRight ? 1 : 0;
+        int left = (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !isCollidingLeft ? -1 : 0;
+        int right = (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !isCollidingRight ? 1 : 0;
 
         velocity = new Vector2((barVelocity * (left + right)), 0.0f);
 

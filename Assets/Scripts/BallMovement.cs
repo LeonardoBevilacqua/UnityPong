@@ -32,6 +32,19 @@ public class BallMovement : MonoBehaviour
     // OnTriggerEnter is called when a collision is trigger
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.name == "Box")
+        {
+            if ((this.transform.position.x - other.GetComponent<Collider2D>().transform.position.x) < 0 || (this.transform.position.x - other.GetComponent<Collider2D>().transform.position.x) > 0)
+            {
+                moveX *= -1;
+            }
+            if ((this.transform.position.y - other.GetComponent<Collider2D>().transform.position.y) < 0 || (this.transform.position.y - other.GetComponent<Collider2D>().transform.position.y) > 0)
+            {
+                moveY *= -1;
+            }
+        }
+
+
         if (other.gameObject.CompareTag("Wall"))
         {
             if (other.gameObject.name == "TopWall")
