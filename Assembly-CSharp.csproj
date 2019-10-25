@@ -53,7 +53,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BallMovement.cs" />
      <Compile Include="Assets\Scripts\BarMovement.cs" />
+     <Compile Include="Assets\Scripts\Box.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/1510033187/Documents/UnityPong/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
