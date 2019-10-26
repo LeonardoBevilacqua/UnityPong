@@ -4,38 +4,53 @@ using UnityEngine;
 
 public class BarMovement : MonoBehaviour
 {
-
+    // variable responsible to set the direction velocity
     private Vector2 velocity;
-    private Rigidbody2D rb2d;
 
-    public float barVelocity;
+    // variable responsible to hold the bar rigid body reference
+    private Rigidbody2D barRigidBody;
 
+    // exported variable responsible to set the bar velocity
+    public float barVelocity = 3.0f;
+
+    // variable responsible to verify if is colliding with the left wall
     private bool isCollidingLeft;
+
+    // variable responsible to verify if is colliding with the right wall
     private bool isCollidingRight;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.barVelocity = 3.0f;
+        // initialize variables
         this.isCollidingLeft = false;
         this.isCollidingRight = false;
-        rb2d = gameObject.GetComponent<Rigidbody2D>();
+
+        // get the bar rigid body
+        barRigidBody = gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        // get inputs from player
         int left = (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !isCollidingLeft ? -1 : 0;
         int right = (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !isCollidingRight ? 1 : 0;
 
-        velocity = new Vector2((barVelocity * (left + right)), 0.0f);
+        // get boost input
+        float boost = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? 4f : 0;
 
-        rb2d.MovePosition(rb2d.position + velocity * Time.fixedDeltaTime);
+        // set the bar velocity
+        velocity = new Vector2(((barVelocity + boost) * (left + right)), 0.0f);
+
+        // move the bar
+        barRigidBody.MovePosition(barRigidBody.position + velocity * Time.fixedDeltaTime);
     }
 
     // OnTriggerEnter is called when a collision is trigger
     void OnTriggerEnter2D(Collider2D other)
     {
+        // handle collision with the wall
         if (other.gameObject.CompareTag("Wall"))
         {
             if (other.gameObject.name == "RightWall")
@@ -49,8 +64,9 @@ public class BarMovement : MonoBehaviour
         }
     }
 
-     void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit2D(Collider2D other)
     {
+        // handle after collision with the wall
         if (other.gameObject.CompareTag("Wall"))
         {
             if (other.gameObject.name == "RightWall")
