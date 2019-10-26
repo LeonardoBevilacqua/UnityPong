@@ -20,7 +20,7 @@ public class BallMovement : MonoBehaviour
     private int points;
 
     // exported variable responsible to set the ball velocity
-    public float ballVelocity;
+    public float ballVelocity = 5.0f;
 
     // exported variable that holds the Points label reference
     public Text pointsLabel;
@@ -29,7 +29,6 @@ public class BallMovement : MonoBehaviour
     void Start()
     {
         // initialize variables
-        this.ballVelocity = 5.0f;
         this.moveX = 1;
         this.moveY = -1;
         this.points = 0;
