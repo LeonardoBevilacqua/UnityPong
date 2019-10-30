@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
-    // variable responsible to set the direction velocity
-    private Vector2 velocity;
+    // variable responsible to set the direction
+    private Vector2 target;
 
     // variable responsible to hold the ball rigid body reference
     private Rigidbody2D ballRigidBody;
@@ -44,10 +44,11 @@ public class BallMovement : MonoBehaviour
     void Update()
     {
         // set the ball velocity
-        velocity = new Vector2(ballVelocity * moveX, ballVelocity * moveY);
+        target = new Vector2(ballVelocity * moveX, ballVelocity * moveY);
 
-        // move the ball
-        ballRigidBody.MovePosition(ballRigidBody.position + velocity * Time.fixedDeltaTime);
+        // move sprite towards the target location
+        float step = ballVelocity * Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, target, step);
     }
 
     // OnTriggerEnter is called when a collision is trigger
@@ -107,8 +108,15 @@ public class BallMovement : MonoBehaviour
     // Method responsible to change the ball behaviour after collide with the player
     private void VerifyPlayerCollision(Collider2D objectCollider)
     {
-        // bounce the ball up
-        moveY *= -1;
+        // get where was hit
+        float distanceY = this.transform.position.y - objectCollider.GetComponent<Collider2D>().transform.position.y;
+
+        // verify if hit the Y axis
+        if (distanceY > 0)
+        {
+            // bounce the ball up
+            moveY *= -1;
+        }
     }
 
     // Method responsible to update the points count and show it
