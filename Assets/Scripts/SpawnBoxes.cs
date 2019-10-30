@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpawnBoxes : MonoBehaviour
 {
+    // variable responsible to hold the main game object
+    private GameObject mainGame;
+
     // exported variable that hold a box prefab reference
     public GameObject box;
 
@@ -13,6 +16,9 @@ public class SpawnBoxes : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // get the main game
+        this.mainGame = GameObject.Find("MainGame");
+
         // create the first box
         CreateBoxes();
     }
@@ -43,7 +49,9 @@ public class SpawnBoxes : MonoBehaviour
             {
                 // create the box
                 Vector3 position = new Vector3(positionX, positionY, 0);
-                Instantiate(box, position, Quaternion.identity);
+                // instantiate the new box inside the main game
+                var newBox = Instantiate(box, position, Quaternion.identity);
+                newBox.transform.parent = this.mainGame.transform;
             }
         }
     }

@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class BallMovement : MonoBehaviour
 {
+
+    // variable responsible to hold if games is active
+    private bool isGameActive;
+
     // variable responsible to set the direction
     private Vector2 target;
 
@@ -24,7 +28,7 @@ public class BallMovement : MonoBehaviour
 
     // exported variable that holds the Points label reference
     public Text pointsLabel;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +36,7 @@ public class BallMovement : MonoBehaviour
         this.moveX = 1;
         this.moveY = -1;
         this.points = 0;
+        this.isGameActive = true;
 
         // get the ball rigid body
         this.ballRigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -68,9 +73,19 @@ public class BallMovement : MonoBehaviour
         }
     }
 
+    // getter to check if game is active
+    public bool IsGameActive()
+    {
+        return isGameActive;
+    }
+
     // Method responsible to change the ball behaviour after collide with a wall
     private void VerifyWallCollision(Collider2D objectCollider)
     {
+        if (objectCollider.gameObject.name == "EndGame")
+        {
+            this.isGameActive = false;
+        }
         // check if hit the ceiling
         if (objectCollider.gameObject.name == "Ceiling")
         {
@@ -120,7 +135,7 @@ public class BallMovement : MonoBehaviour
     }
 
     // Method responsible to update the points count and show it
-    private void UpdatePoints() 
+    private void UpdatePoints()
     {
         this.pointsLabel.text = (++this.points).ToString();
 
