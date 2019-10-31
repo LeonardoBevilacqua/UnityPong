@@ -5,10 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class BallMovement : MonoBehaviour
 {
-
-    // variable responsible to hold if games is active
-    private bool isGameActive;
-
     // variable responsible to set the direction
     private Vector2 target;
 
@@ -20,8 +16,6 @@ public class BallMovement : MonoBehaviour
 
     // variable responsible to set the Y direction
     private int moveY;
-
-    private int points;
 
     // exported variable responsible to set the ball velocity
     public float ballVelocity = 5.0f;
@@ -35,8 +29,8 @@ public class BallMovement : MonoBehaviour
         // initialize variables
         this.moveX = 1;
         this.moveY = -1;
-        this.points = 0;
-        this.isGameActive = true;
+        Manager.Instance.setCurrentPoints(0);
+        Manager.Instance.setIsGamingRunning(true);
 
         // get the ball rigid body
         this.ballRigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -73,18 +67,12 @@ public class BallMovement : MonoBehaviour
         }
     }
 
-    // getter to check if game is active
-    public bool IsGameActive()
-    {
-        return isGameActive;
-    }
-
     // Method responsible to change the ball behaviour after collide with a wall
     private void VerifyWallCollision(Collider2D objectCollider)
     {
         if (objectCollider.gameObject.name == "EndGame")
         {
-            this.isGameActive = false;
+            Manager.Instance.setIsGamingRunning(false);
         }
         // check if hit the ceiling
         if (objectCollider.gameObject.name == "Ceiling")
@@ -137,7 +125,7 @@ public class BallMovement : MonoBehaviour
     // Method responsible to update the points count and show it
     private void UpdatePoints()
     {
-        this.pointsLabel.text = (++this.points).ToString();
-
+        Manager.Instance.setCurrentPoints(Manager.Instance.getCurrentPoints() + 1);
+        this.pointsLabel.text = (Manager.Instance.getCurrentPoints()).ToString();
     }
 }
