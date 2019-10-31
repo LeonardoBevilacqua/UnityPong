@@ -24,4 +24,10 @@ public class MainGame : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    public void Reset()
+    {
+        this.gameOver.SetActive(false);
+        gameObject.SetActive(true);
+    }
 }
