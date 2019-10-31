@@ -1,19 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainGame : MonoBehaviour
 {
-    // variable responsible to hold the main game object
+    // variable responsible to hold the game over prefab
     private GameObject gameOver;
+
+    // variable responsible to gold the game over instance
+    private GameObject gameOverInstance;
 
     // Start is called before the first frame update
     void Start()
     {
-        // get the game over
-        this.gameOver = GameObject.Find("GameOver");
-        this.gameOver.SetActive(false);
+        // get the game over prefab
+        this.gameOver = (GameObject)Resources.Load("Prefabs/GameOver", typeof(GameObject));
     }
 
     // Update is called once per frame
@@ -23,15 +24,10 @@ public class MainGame : MonoBehaviour
         if (!Manager.Instance.getIsGamingRunning())
         {
             // hide the game and show the game over
-            this.gameOver.SetActive(true);
             gameObject.SetActive(false);
-        }
-    }
 
-    // Method responsible to reset the main game scene
-    public void Reset()
-    {
-        // Reset the main scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // instantiate the game over
+            this.gameOverInstance = Instantiate(this.gameOver, new Vector3(0, 0, 0), Quaternion.identity);
+        }
     }
 }
