@@ -21,7 +21,7 @@ public class MainGame : MonoBehaviour
     void Update()
     {
         // verify the game still active
-        if (!Manager.Instance.getIsGamingRunning())
+        if (!Manager.Instance.GetIsGamingRunning())
         {
             // hide the game and show the game over
             gameObject.SetActive(false);

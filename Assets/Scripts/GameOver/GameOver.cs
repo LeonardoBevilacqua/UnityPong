@@ -12,7 +12,7 @@ public class GameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        finalPoints.text = "Sua pontuação: " + Manager.Instance.getCurrentPoints().ToString();
+        finalPoints.text = "Sua pontuação: " + Manager.Instance.GetCurrentPoints().ToString();
     }
 
     // Method responsible to reset the main game scene

@@ -29,8 +29,8 @@ public class BallMovement : MonoBehaviour
         // initialize variables
         this.moveX = 1;
         this.moveY = -1;
-        Manager.Instance.setCurrentPoints(0);
-        Manager.Instance.setIsGamingRunning(true);
+        Manager.Instance.SetCurrentPoints(0);
+        Manager.Instance.SetIsGamingRunning(true);
 
         // get the ball rigid body
         this.ballRigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -72,7 +72,7 @@ public class BallMovement : MonoBehaviour
     {
         if (objectCollider.gameObject.name == "EndGame")
         {
-            Manager.Instance.setIsGamingRunning(false);
+            Manager.Instance.EndGame();
         }
         // check if hit the ceiling
         if (objectCollider.gameObject.name == "Ceiling")
@@ -125,7 +125,7 @@ public class BallMovement : MonoBehaviour
     // Method responsible to update the points count and show it
     private void UpdatePoints()
     {
-        Manager.Instance.setCurrentPoints(Manager.Instance.getCurrentPoints() + 1);
-        this.pointsLabel.text = (Manager.Instance.getCurrentPoints()).ToString();
+        Manager.Instance.SetCurrentPoints(Manager.Instance.GetCurrentPoints() + 1);
+        this.pointsLabel.text = (Manager.Instance.GetCurrentPoints()).ToString();
     }
 }
