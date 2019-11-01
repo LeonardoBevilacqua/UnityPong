@@ -70,8 +70,6 @@ public class Manager : MonoBehaviour
     // Method responsible to save the score
     public void SaveScore()
     {
-        this.topScores.Sort();
-
         BinaryFormatter binaryFormatter = new BinaryFormatter();
         FileStream file = File.Open(this.savePath, FileMode.OpenOrCreate);
 
@@ -93,7 +91,7 @@ public class Manager : MonoBehaviour
         }
     }
 
-    public int GetTopSCore()
+    public int GetTopScore()
     {
         return (int)this.topScores[this.topScores.Count - 1];
     }
@@ -128,5 +126,6 @@ public class Manager : MonoBehaviour
     public void AddTopScore(int score)
     {
         this.topScores.Add(score);
+        this.topScores.Sort();
     }
 }
