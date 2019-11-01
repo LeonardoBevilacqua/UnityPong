@@ -22,4 +22,10 @@ public class GameOver : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Destroy(gameObject);
     }
+
+     // Method responsible to change to menu scene
+    public void GoToMenu()
+    {
+        Manager.Instance.GoToMenu();
+    }
 }

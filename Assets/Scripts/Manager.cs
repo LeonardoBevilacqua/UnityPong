@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
@@ -23,6 +24,28 @@ public class Manager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    // Method responsible to change to game main Scene
+    public void StartGame()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
+
+    // Method responsible to exit the game
+    public void ExitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
+    // Method responsible to change to menu scene
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 
     // getters and setters
